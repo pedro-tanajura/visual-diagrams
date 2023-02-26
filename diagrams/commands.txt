@@ -1,0 +1,55 @@
+# Azure login
+    az login
+
+# K8s cluster
+    cd tf-azure-cluster
+    tf init
+    tf plan
+    tf apply
+    cd ..
+
+# Grafana + Prometheus + Loki
+    cd tf-monitoring-cluster
+    tf init
+    tf plan
+    tf apply
+    cd ..
+
+# Python application
+    cd tf-python-app
+    tf init
+    tf plan
+    tf apply
+    cd ..
+
+# Update github actions secrets on python-app-demo
+    ## Get secret: ACR_PASSWORD
+        az acr update -n pedrotanajuraACR2023 --admin-enabled true
+        az acr credential show -n pedrotanajuraACR2023
+
+    ## Get secret: KUBE_CONFIG_DATA
+        cat ./tf-azure-cluster/kubeconfig | base64
+
+# Create a new tag to trigger the CI/CD pipeline
+
+# Access python application
+    ## Update kubeconfig
+
+    ## Get external IP  
+        kubectl config use-context cluster2023
+        kubectl get svc --namespace="apps"
+
+    ## Access the external IP with the correct port
+
+# Configure monitoring tools
+    ## Access Grafana UI
+        kubectl port-forward --namespace monitoring svc/grafana 3000:80
+        kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-user}" | base64 --decode
+        kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+
+    ## Configure Loki datasource (grafana-loki -> CLUSTER_IP:3100)
+        kubectl get svc --namespace="monitoring"
+
+    ## Add dashboards
+        - Namespace resources dashboard ID: 15758
+        - Logs dashboard ID: 13186
