@@ -53,3 +53,7 @@
     ## Add dashboards
         - Namespace resources dashboard ID: 15758
         - Logs dashboard ID: 13186
+
+# Destroy cluster
+    cd tf-azure-cluster
+    terraform destroy --auto-approve
